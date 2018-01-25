@@ -1,0 +1,22 @@
+<!-- Test.wsf -->
+<job id="InputBoxInJS">
+   <script language="VBScript">
+      Function VBInputBox(promptText)
+        VBInputBox = InputBox(promptText)
+      End Function
+   </script>
+
+   <script language="JScript">
+      var x = VBInputBox(
+         "Enter action code:\n" +
+         "1 - find lines with text AAA in file\n" +
+         "2 - sort the file in descending order of the second character and write it to a new file\n" +
+         "3 - display a file with the specified name"
+      )
+      var command;
+      if (x === "1" || x === "2" || x === "3") {
+         command = x + ".js file.txt"
+         WScript.CreateObject("WScript.Shell").Run("wscript.exe " + command)
+      } else WScript.Echo("Incorrect code")
+   </script>
+</job>

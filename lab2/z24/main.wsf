@@ -1,0 +1,48 @@
+<!-- Test.wsf -->
+<job id="InputBoxInJS">
+   <script language="VBScript">
+      Function VBInputBox(promptText)
+        VBInputBox = InputBox(promptText)
+      End Function
+   </script>
+
+   <script language="JScript">
+      var fso = new ActiveXObject("Scripting.FileSystemObject");
+      if (!fso.FolderExists('dir')) {
+         fso.CreateFolder('dir');
+      }
+      var exts = ["js", "css", "html", "txt"];
+      for (i in exts) {
+         var a = fso.CreateTextFile("./dir/" + exts[i] + '.' + exts[i], true);
+         a.WriteLine("some content");
+         a.Close();
+      }
+      var x = VBInputBox(
+         "Enter action code:\n" +
+         "1 - Remove from the specified directory all files that have an extension which starts with the specified letter\n" +
+         "2 - Display the contents of a file with the specified name of the specified directory, if it is not empty\n" +
+         "3 - rename files of the specified directory with names beginning with a given letter"
+      )
+      var command;
+      switch (x) {
+         case "1": {
+            command = "1.js dir j"
+            break;
+         }
+         case "2": {
+            command = "2.js dir css.css"
+            break;
+         }
+         case "3": {
+            command = "3.js dir j"
+            break;
+         }
+         default: {
+            WScript.Echo("Incorrect code")
+         }
+      }
+      if (command) {
+         WScript.CreateObject("WScript.Shell").Run("wscript.exe " + command)
+      }
+   </script>
+</job>

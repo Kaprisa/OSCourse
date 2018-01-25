@@ -1,0 +1,60 @@
+<!-- Test.wsf -->
+<job id='InputBoxInJS'>
+   <script language='VBScript'>
+      Function VBInputBox(promptText)
+        VBInputBox = InputBox(promptText)
+      End Function
+   </script>
+
+   <script language='JScript'>
+      var fso = new ActiveXObject('Scripting.FileSystemObject');
+      if (!fso.FolderExists('dir')) {
+         fso.CreateFolder('dir');
+      }
+      if (!fso.FolderExists('dir1')) {
+         fso.CreateFolder('dir1');
+      }
+      var files = ['css.css', 'dir/css.css', 'dir/js.js'];
+      for (i in files) {
+         var a = fso.CreateTextFile('./' + files[i], true);
+         if (files[i] === 'css.css') {
+            a.Write(
+'body {\n' +
+'   color: #000000;\n' +
+'   margin: 0;\n' +
+'   background-color: #ffffff;\n' +
+'}\n\n' +
+'p {\n' +
+'   padding: 0;\n' +
+'   margin: 0;\n' +
+'   background-size: 12px;\n' +
+'   color: #222;\n' +
+'}\n'
+         );
+         }
+         a.Close();
+      }
+      var x = VBInputBox(
+         'Enter action code:\n' +
+         '1 - Copy to the file with the specified name of the specified directory those lines of the specified file of the current directory that contain the specified text\n' +
+         '2 - Move file with the given name from one directory to another\n'
+      )
+      var command;
+      switch (x) {
+         case '1': {
+            command = '1.js dir css.css css.css color'
+            break;
+         }
+         case '2': {
+            command = '2.js dir dir1 js.js'
+            break;
+         }
+         default: {
+            WScript.Echo('Incorrect code')
+         }
+      }
+      if (command) {
+         WScript.CreateObject('WScript.Shell').Run('wscript.exe ' + command)
+      }
+   </script>
+</job>
