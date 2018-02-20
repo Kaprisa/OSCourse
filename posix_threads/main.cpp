@@ -27,8 +27,8 @@ struct comparator {
 
 };
 
-bool process_file() {
-    if (!files.empty()) {
+void process_file() {
+    while (!files.empty()) {
         pthread_mutex_lock(&mutex); // Блокировка, т.к используется глобальный контейнер
         auto e = files.begin(); // Извлечь файл для обработки данным потоком
         files.erase(e);
@@ -47,14 +47,12 @@ bool process_file() {
         } else {
             cout << "Не удалось открыть файл " << *e << endl;
         }
-        return process_file();
     }
-    return false; // Если файлы закончились, закончить рекурсию
 }
 
 void *ProcessFile(void *pid) {
     int* id = (int *) pid;
-    while(process_file()) { };
+    process_file(); // Обработать файлы
     cout << "PID потока : " << *id << endl;
     pthread_exit(NULL);
 }
