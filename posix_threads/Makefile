@@ -1,2 +1,2 @@
 all:
-	g++ -std=c++11 -lpthread ready.cpp -o demo  2>&1
+	g++ -std=c++11 -lpthread main.cpp -o main  2>&1
