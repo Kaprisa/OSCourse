@@ -1,0 +1,1 @@
+/usr/bin/c++   -std=c++14 -pthread -g   CMakeFiles/my.dir/main.cpp.o CMakeFiles/my.dir/File.cpp.o  -o my 
